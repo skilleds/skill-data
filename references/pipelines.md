@@ -7,7 +7,9 @@
 > separam pipeline de gambiarra: **idempotência** e **reprocessamento determinístico**.
 
 Casa com a base (`schematize-engineering` §9 eventos, §18 resiliência, §19 jobs): eventos
-imutáveis/versionados, **Transactional Outbox**, DLQ, retry limitado, jobs idempotentes.
+imutáveis/versionados, **Transactional Outbox**, DLQ, retry limitado, jobs idempotentes. O contrato de independência do serviço consumidor/produtor — **fila durável (outbox/inbox), DLQ, os 7 testes de resiliência e `resilience.yml`** — é o **piso 28** da base (`schematize-qa -> references/categorias.md` §15 traz os casos e o gate `check-resilience.sh`); este reference não os repete.
+
+> **Replay, reprocessamento e esvaziar DLQ em hml/prd** são operações nomeadas do `<projeto>_ops` (dry-run, depois confirmação humana em prd); a IA nunca escreve o SQL nem mexe na VPS à mão (pisos 23/24).
 
 ## 1. ETL vs ELT — e onde vive a transformação
 

@@ -95,7 +95,7 @@ Independente do reference, estes limites nunca são cruzados:
    engolida.
 5. **Migração/backfill de dados é reversível e em lotes.** O expand-contract do schema é da
    `schematize-database → references/migrations.md`; aqui, backfill sem plano de rollback ou que só
-   corta o velho com leitor ainda ativo (lineage) é **VETADO**. Timestamps em **UTC**; IDs **UUIDv7/ULID**.
+   corta o velho com leitor ainda ativo (lineage) é **VETADO**. Em hml/prd, backfill/replay/liberação de quarentena = **operação nomeada do ops** (dry-run + confirmação humana; a IA não escreve o SQL — piso 24). Timestamps em **UTC**; IDs **UUIDv7/ULID**.
 6. **Deny-by-default no acesso ao dado.** Acesso a dataset/tabela/tópico é **negado por padrão** e
    concedido por necessidade (least-privilege), derivado do token **server-side** e por
    **tenant** (`WHERE tenant_id`, RLS quando couber — base §15). Confiar em `tenant_id`/role vindo
@@ -193,3 +193,5 @@ Independente do reference, estes limites nunca são cruzados:
   a `schematize-database` junto** — pipeline novo que cria tabela sem o piso de chaves e índices é
   dívida no dia 1, e é exatamente onde os dois lados se encontram (a migration de dados desta
   skill **executa** o schema desenhado lá).
+
+Herda os pisos 22–29 da `schematize-engineering` (git como trava de conclusão, deploy só do git, ops é o gate da IA, sem agents inúteis, relatório 30 min/handoff 6 h, CI remoto só antes do hml, microserviço autônomo, build em dev/hml + higiene).

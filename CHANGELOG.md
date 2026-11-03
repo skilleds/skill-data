@@ -4,6 +4,13 @@ Todas as mudanças relevantes deste pacote, no formato [Keep a Changelog](https:
 com versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
 
+## [Não lançado]
+### Corrigido
+- Backfill, replay, reprocessamento e liberação de quarentena em hml/prd = operação nomeada do `<projeto>_ops` (dry-run + confirmação humana; a IA não escreve SQL — pisos 23/24).
+- `pipelines.md` aponta o piso 28 (fila durável, DLQ, 7 testes, `resilience.yml`) sem duplicar os casos.
+### Adicionado
+- Bloco "Herda os pisos 22–29".
+
 ## [0.8.0] — 2026-10-15
 ### Alterado
 - Relação com outras skills e `references/qualidade.md` §3 apontam para `schematize-regression` (regressão

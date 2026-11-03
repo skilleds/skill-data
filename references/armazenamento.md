@@ -64,6 +64,7 @@ O **DDL** do schema (expand → migrate → contract, constraints, `down` da mig
 - **Backfill grande é operação planejada:** em **lotes** (não um `UPDATE` de milhões que trava a tabela), com throttle, idempotente, monitorado, **reversível** (como desfazer/reprocessar) e registrado (plano no archive).
 - **Só contrai quando ninguém lê:** o **lineage/catálogo** (`governanca.md`) confirma que todo leitor migrou antes de o campo/dataset velho sair; compat de contrato em `contratos.md`.
 - **Dual-write só dentro do mesmo banco e da mesma transação.** O dual-write vetado (piso 2) é escrever em **dois sistemas** (banco + broker) sem transação que cubra os dois.
+- **Quem executa (pisos 23/24):** em hml/prd o backfill, o replay e a liberação de quarentena são **operações nomeadas do `<projeto>_ops`** (tipo + parâmetros: dataset, janela, lote, throttle), com **dry-run primeiro** e confirmação humana em prd. A IA descreve o plano e chama a operação; **nunca escreve o SQL/`UPDATE` nem roda script à mão no servidor**. Falta a operação? Crie no repo do ops.
 - **Zero-downtime como default:** deploy gradual (blue/green, rolling) sem janela de manutenção.
 
 ## 5. Segurança e multi-tenancy no store (herdado, §13-15)
